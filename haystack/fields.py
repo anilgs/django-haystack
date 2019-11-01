@@ -232,7 +232,7 @@ class IntegerField(SearchField):
     def convert(self, value):
         if value is None:
             return None
-        #fix for list variables being used for DJANGO_CT and DJANGO_ID
+        #fix for list variables being used 
         if isinstance(value, list):
             return int(value[0])
         return int(value)
@@ -254,7 +254,9 @@ class FloatField(SearchField):
     def convert(self, value):
         if value is None:
             return None
-
+        #fix for list variables being used 
+        if isinstance(value, list):
+            return float(value[0])
         return float(value)
 
 
