@@ -416,8 +416,12 @@ class SolrSearchBackend(BaseSearchBackend):
                         additional_fields['_distance'] = Distance(km=float(raw_result['__dist__']))
                     else:
                         additional_fields['_distance'] = None
-
-                result = result_class(app_label, model_name, raw_result[DJANGO_ID], raw_result['score'], **additional_fields)
+                #SOLR 5.5 onwards DJANGO_ID is a list
+                if type(raw_result[DJANGO_ID]) == list:
+                    django_id = raw_result[DJANGO_ID][0]
+                else:
+                    django_id = raw_result[DJANGO_ID][0]
+                result = result_class(app_label, model_name, django_id, raw_result['score'], **additional_fields)
                 results.append(result)
             else:
                 hits -= 1
